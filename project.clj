@@ -6,11 +6,16 @@
                  [datascript "0.13.3"]
                  [org.omcljs/om "1.0.0-alpha25"]
                  [figwheel-sidecar "0.5.0-2" :scope "test"]
-                 [cljsjs/codemirror "5.8.0-0"]]
+                 [cljsjs/codemirror "5.8.0-0"]
+                 ]
 
   :source-paths ["src/main" "src/cards" "src/tutorial"]
 
-  :plugins [[lein-cljsbuild "1.1.1"]]
+  :plugins [[lein-cljsbuild "1.1.1"]
+            [lein-figwheel "0.5.0-1"]
+            [com.cemerick/piggieback "0.2.1"]
+            [cider/cider-nrepl "0.10.0"]
+            [refactor-nrepl "1.1.0"]]
 
   :clean-targets ^{:protect false} ["resources/public/js" "resources/public/cards" "resources/public/tutorial" "target"]
 
@@ -23,6 +28,9 @@
                {:id           "dev"
                 :figwheel     true
                 :source-paths ["src/main"]
+                :dependencies [[org.clojure/tools.nrepl "0.2.12"]
+                               [com.cemerick/piggieback "0.2.1"]
+                               ]
                 :compiler     {:main                 om-tutorial.core
                                :asset-path           "js"
                                :output-to            "resources/public/js/main.js"
@@ -33,6 +41,9 @@
                {:id           "cards"
                 :figwheel     {:devcards true}
                 :source-paths ["src/main" "src/cards"]
+                :dependencies [[org.clojure/tools.nrepl "0.2.12"]
+                               [com.cemerick/piggieback "0.2.1"]
+                               ]
                 :compiler     {
                                :main                 om-tutorial.cards
                                :source-map-timestamp true
@@ -45,6 +56,9 @@
                {:id           "tutorial"
                 :figwheel     {:devcards true}
                 :source-paths ["src/main" "src/tutorial"]
+                :dependencies [[org.clojure/tools.nrepl "0.2.12"]
+                               [com.cemerick/piggieback "0.2.1"]
+                               ]
                 :compiler     {
                                :main                 om-tutorial.tutorial
                                :source-map-timestamp true
@@ -81,7 +95,7 @@
   :profiles {
              :dev {:source-paths ["src/dev"]
                    :repl-options {:init-ns user
-                                  :port    7001}
-                   }
-             }
-  )
+                                  :port    7001}}
+             :tutorial {:source-paths ["src/main" "src/tutorial"]
+                        :dependencies [[org.clojure/tools.nrepl "0.2.12"]
+                                       [com.cemerick/piggieback "0.2.1"]]}})

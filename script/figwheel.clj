@@ -1,10 +1,15 @@
 (ns user
   (:require
-    [figwheel-sidecar.repl-api :as ra]
+   [figwheel-sidecar.repl-api :as ra]
+   [cemerick.piggieback]
     ))
 
 (def figwheel-config
-  {:figwheel-options {:server-port 3450}
+  {:figwheel-options {:server-port 3450
+                      :nrepl-port 7888
+                      :nrepl-middleware ["cider.nrepl/cider-middleware"
+                                         "refactor-nrepl.middleware/wrap-refactor"
+                                         "cemerick.piggieback/wrap-cljs-repl"]}
    ;; builds to focus on
    :build-ids        [ "tutorial" ]
    ;; load build configs from project file
